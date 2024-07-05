@@ -11,7 +11,10 @@ namespace Wissen.Istka.BlogProject.App.Entity.Services
 	{
 		Task<string> CreateUserAsync(RegisterViewModel model);
 		Task<string> FindByNameAsync(LoginViewModel model);
-
 		Task<UserViewModel> Find(string username);
-	}
+        Task<string> CreateRoleAsync(RoleViewModel model);
+		Task<List<RoleViewModel>> GetAllRoles();
+
+
+    }
 }

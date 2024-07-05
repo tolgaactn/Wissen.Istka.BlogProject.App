@@ -19,7 +19,9 @@ namespace Wissen.Istka.BlogProject.App.Service.Mapping
 			CreateMap<Comment, CommentViewModel>().ReverseMap();
 			CreateMap<AppUser, UserViewModel>().ReverseMap();
 			CreateMap<AppUser, LoginViewModel>().ReverseMap();
+            CreateMap<AppRole, RoleViewModel>().ReverseMap();
 
-		}
-	}
+
+        }
+    }
 }

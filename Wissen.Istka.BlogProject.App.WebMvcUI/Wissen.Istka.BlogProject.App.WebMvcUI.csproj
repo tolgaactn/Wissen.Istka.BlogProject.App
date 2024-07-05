@@ -18,4 +18,9 @@
     <ProjectReference Include="..\Wissen.Istka.BlogProject.App.Service\Wissen.Istka.BlogProject.App.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>
