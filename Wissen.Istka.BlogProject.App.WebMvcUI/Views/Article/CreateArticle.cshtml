@@ -1,0 +1,42 @@
+﻿@model ArticleViewModel
+@{
+    ViewData["Title"] = "CreateArticle";
+    Layout = "~/Views/Shared/_Layout-Blog.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Blog Yazısı</title>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+
+</head>
+<body>
+    
+    <form asp-action="Create">
+        <div>
+            <label for="Title">Başlık</label>
+            <input type="text" id="Title" name="Title" />
+        </div>
+        <div>
+            <label for="Content">İçerik</label>
+            <textarea id="Content" name="Content"></textarea>
+        </div>
+        <div>
+            <label for="Summary">İçerik</label>
+            <textarea id="Summary" name="Summary"></textarea>
+        </div>
+        <button type="submit">Kaydet</button>
+    </form>
+
+    <!-- CKEditor Başlatma -->
+    <script>
+        ClassicEditor.create(document.querySelector('#Content'));
+    </script>
+
+</body>
+</html>
+
