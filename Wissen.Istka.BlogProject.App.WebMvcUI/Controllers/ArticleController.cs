@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Wissen.Istka.BlogProject.App.Entity.Entities;
 using Wissen.Istka.BlogProject.App.Entity.Services;
 using Wissen.Istka.BlogProject.App.Entity.ViewModels;
@@ -10,14 +11,16 @@ namespace Wissen.Istka.BlogProject.App.WebMvcUI.Controllers
 		private readonly IArticleService _articleService;
 		private readonly ICommentService _commentService;
 		private readonly IAccountService _accountService;
+		private readonly ICategoryService _categoryService;
 
-		public ArticleController(IArticleService articleService, ICommentService commentService, IAccountService accountService)
-		{
-			_articleService = articleService;
-			_commentService = commentService;
-			_accountService = accountService;
-		}
-		public async Task<IActionResult> Index(int? id, string? search)
+        public ArticleController(IArticleService articleService, ICommentService commentService, IAccountService accountService, ICategoryService categoryService)
+        {
+            _articleService = articleService;
+            _commentService = commentService;
+            _accountService = accountService;
+            _categoryService = categoryService;
+        }
+        public async Task<IActionResult> Index(int? id, string? search)
 		{
 			var list = await _articleService.GetAll();
 
@@ -71,6 +74,24 @@ namespace Wissen.Istka.BlogProject.App.WebMvcUI.Controllers
 			};
 			await _articleService.Add(model);
 			return RedirectToAction("Index");
+		}
+		[HttpPost]
+		public async Task<IActionResult> Create(ArticleViewModel model, IFormFile formFile)
+		{
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//images", formFile.FileName);
+            var stream = new FileStream(path, FileMode.Create);
+            formFile.CopyTo(stream);
+			model.PictureUrl = "/images/" + formFile.FileName;
+			var user = _accountService.Find(User.Identity.Name);
+			model.UserId = user.Id;
+			await _articleService.Add(model);
+			return RedirectToAction("Index");
+        }
+		public async Task<IActionResult> Create()
+		{
+			var categories = await _categoryService.GetAll();
+			ViewBag.Categories = new SelectList(categories, "Id", "Name");
+			return View();
 		}
 	}
 }

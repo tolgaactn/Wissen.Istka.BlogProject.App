@@ -29,9 +29,7 @@ namespace Wissen.Istka.BlogProject.App.Service.Services
 		}
 		public async Task Add(ArticleViewModel model)
 		{
-			Article article = new Article();
-			article = _mapper.Map<Article>(model);
-			await _uow.GetRepository<Article>().Add(article);
+			await _uow.GetRepository<Article>().Add(_mapper.Map<Article>(model));
 			await _uow.CommitAsync();
 		}
 
